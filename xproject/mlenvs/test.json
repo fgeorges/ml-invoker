@@ -1,0 +1,36 @@
+{
+    "mlproj": {
+        "format": "0.1",
+        "connect": {
+            "host": "ml9ea3",
+            "user": "admin",
+            "password": "admin"
+        },
+        "databases": [{
+            "id": "content",
+            "name": "@{code}-content"
+        }, {
+            "id": "modules",
+            "name": "@{code}-modules"
+        }, {
+            "id": "db-one",
+            "name": "@{code}-db-one"
+        }, {
+            "id": "db-two",
+            "name": "@{code}-db-two"
+        }],
+        "servers": [{
+            "id": "test",
+            "name": "@{code}-test",
+            "type": "http",
+            "port": "8050",
+            "content": {
+                "idref": "content"
+            },
+            "modules": {
+                "idref": "modules"
+            },
+            "root": "/"
+        }]
+    }
+}

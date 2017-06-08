@@ -1,0 +1,8 @@
+<project xmlns="http://expath.org/ns/project"
+         name="http://expath.org/lib/ml/invoker"
+         abbrev="invoker"
+         version="0.1.0">
+
+   <title>Invoker for MarkLogic</title>
+
+</project>
