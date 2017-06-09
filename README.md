@@ -16,6 +16,9 @@ module or a piece of code.)
 
 ## eval:invoke
 
+This function is the main entry point, and is most likely the one you
+want to look at.
+
 ```xquery
 eval:invoke($input)
 eval:invoke($input, $id)
@@ -31,9 +34,6 @@ provided, it is the database to evaluate `$input` against.  If
 against.  If `$lang` is provided, it is the language of the component,
 either `xquery` or `js`.  The value of these parameters can be set
 instead on `$input` itself.
-
-This function is the main entry point, and is most likely the one you
-want to look at.
 
 Example:
 
