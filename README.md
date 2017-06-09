@@ -16,11 +16,13 @@ module or a piece of code.)
 
 ## eval:invoke
 
-    eval:invoke($input)
-    eval:invoke($input, $id)
-    eval:invoke($input, $id, $db)
-    eval:invoke($input, $id, $db, $modules)
-    eval:invoke($input, $id, $db, $modules, $lang)
+```xquery
+eval:invoke($input)
+eval:invoke($input, $id)
+eval:invoke($input, $id, $db)
+eval:invoke($input, $id, $db, $modules)
+eval:invoke($input, $id, $db, $modules, $lang)
+```
 
 This function evaluate the component `$input`.  If `$id` is provided,
 then evaluate the child of `$input` with `@id eq $id`.  If `$db` is
