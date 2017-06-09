@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 import module namespace eval = "http://expath.org/ns/invoker" at "lib/invoker.xqy";
 
 declare namespace h = "http://expath.org/ns/invoker/test/hello";
@@ -234,6 +236,37 @@ declare function local:module(
  : Test result formatting functions.
  :)
 
+declare function local:todo($msg  as xs:string)
+{
+   local:todo($msg, (), ())
+};
+
+declare function local:todo(
+   $msg  as xs:string,
+   $what as xs:string?,
+   $how  as xs:string?
+)
+{
+   local:todo($msg, $what, $how, ())
+};
+
+declare function local:todo(
+   $msg  as xs:string,
+   $what as xs:string?,
+   $how  as xs:string?,
+   $cmp  as xs:string?
+)
+{
+   <p xmlns="http://www.w3.org/1999/xhtml"> {
+      <span style="color: red">✘</span>,
+      ' ',
+      fn:string-join(($cmp, $what, $how), ' / '),
+      ' - ',
+      $msg
+   }
+   </p>
+};
+
 declare function local:test(
    $res  as item()*,
    $exp  as xs:string,
@@ -375,7 +408,6 @@ declare function local:test(
       function() { local:hello('world') },
       'Hello, world!', 'function IV', 'param'),
 
-   (: TODO: What about a JS fun, in an SJS file? :)
    local:call(
       xs:QName('h:hello'), '/hello-lib.xqy',
       'Hello, world!', 'href', 'param'),
@@ -384,6 +416,14 @@ declare function local:test(
       <dummy xmlns:h="http://expath.org/ns/invoker/test/hello"
              name="h:hello" href="/hello-lib.xqy"/>,
       'Hello, world!', 'href', 'elem'),
+
+   (: TODO: What about a JS fun, in an SJS file? :)
+   local:todo('Calling a JavaScript function not supported yet', 'href sjs', 'param'),
+   (:
+   local:call(
+      'hello', '/hello-lib.sjs',
+      'Hello, world!', 'href sjs', 'param'),
+   :)
 
    local:call(
       local:hello-doc#0, (), 'Documents',
@@ -410,9 +450,10 @@ declare function local:test(
    local:call(
       <dummy xmlns:l="http://www.w3.org/2005/xquery-local-functions"
              name="l:hello" lang="xquery"/>,
-      'Hello, world!', 'xquery', 'elem')
+      'Hello, world!', 'xquery', 'elem'),
 
    (: TODO: Not supported yet... :)
+   local:todo('Calling a JavaScript function not supported yet', 'javascript', 'param')
    (:
    local:call(
       ???, (), (), (), 'js',
@@ -466,6 +507,18 @@ declare function local:test(
    local:module(
       <dummy href="/hello-world.sjs" lang="js"/>,
       'Hello, js!', 'javascript', 'elem')
+}
+
+<h2>eval:script</h2>
+
+{
+   local:todo('eval:script not supported yet')
+}
+
+<h2>eval:eval</h2>
+
+{
+   local:todo('eval:eval not supported yet')
 }
 
 </body>
