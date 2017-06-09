@@ -37,35 +37,39 @@ want to look at.
 
 Example:
 
-    eval:invoke(
-        <config xmlns="http://expath.org/ns/invoker" xmlns:my="my/lib">
-           <function name="my:do-this"  id="one"/>
-           <function name="my:do-that"  id="two"   db="Documents"/>
-           <function name="my:do-stuff" id="three" modules-db="Modules"/>
-           <module href="/some/module.xqy" id="four" modules-db="Modules"/>
-           <eval id="five">
-              some:complete('query to evaluate')
-           </eval>
-        </config>,
-        'two')
+```xquery
+eval:invoke(
+    <config xmlns="http://expath.org/ns/invoker" xmlns:my="my/lib">
+       <function name="my:do-this"  id="one"/>
+       <function name="my:do-that"  id="two"   db="Documents"/>
+       <function name="my:do-stuff" id="three" modules-db="Modules"/>
+       <module href="/some/module.xqy" id="four" modules-db="Modules"/>
+       <eval id="five">
+          some:complete('query to evaluate')
+       </eval>
+    </config>,
+    'two')
+```
 
 ## XML elements
 
 The following elements are supported:
 
-    <function name="my:do-this" id="one" href="/some/lib.xqy" db="Documents" modules-db="Modules" lang="xquery"/>
-    
-    <module href="/some/query.xqy" id="two" db="Documents" modules-db="Modules"/>
-    
-    <script href="/some/script.sjs" id="three" db="Documents" modules-db="Modules"/>
-    
-    <eval id="four" db="Documents" modules-db="Modules" lang="xquery">
-       do:stuff('Hello, world!')
-    </eval>
-    
-    <eval id="five" db="Documents" modules-db="Modules" lang="js">
-       do.stuff('Hello, world!');
-    </eval>
+```xml
+<function name="my:do-this" id="one" href="/some/lib.xqy" db="Documents" modules-db="Modules" lang="xquery"/>
+
+<module href="/some/query.xqy" id="two" db="Documents" modules-db="Modules"/>
+
+<script href="/some/script.sjs" id="three" db="Documents" modules-db="Modules"/>
+
+<eval id="four" db="Documents" modules-db="Modules" lang="xquery">
+   do:stuff('Hello, world!')
+</eval>
+
+<eval id="five" db="Documents" modules-db="Modules" lang="js">
+   do.stuff('Hello, world!');
+</eval>
+```
 
 The attribute `@id` is the ID of the element.  The attribute `@db` is
 the content database to use.  It can be the name or the numeric ID of
@@ -75,19 +79,21 @@ of the modules database to use.  The attribute `@lang` is either
 
 The minimal form of the above elements is as following:
 
-    <function name="my:do-this"/>
-    
-    <module href="/some/query.xqy"/>
-    
-    <script href="/some/script.sjs"/>
-    
-    <eval id="four">
-       do:stuff('Hello, world!')
-    </eval>
-    
-    <eval id="five">
-       do.stuff('Hello, world!');
-    </eval>
+```xml
+<function name="my:do-this"/>
+
+<module href="/some/query.xqy"/>
+
+<script href="/some/script.sjs"/>
+
+<eval id="four">
+   do:stuff('Hello, world!')
+</eval>
+
+<eval id="five">
+   do.stuff('Hello, world!');
+</eval>
+```
 
 The attribute `@href` on the element `function` is the URI of the
 library module where the function is declared.  On the elements
@@ -95,11 +101,13 @@ library module where the function is declared.  On the elements
 
 ## eval:call
 
-    eval:call($input)
-    eval:call($input, $href)
-    eval:call($input, $href, $db)
-    eval:call($input, $href, $db, $modules)
-    eval:call($input, $href, $db, $modules, $lang)
+```xquery
+eval:call($input)
+eval:call($input, $href)
+eval:call($input, $href, $db)
+eval:call($input, $href, $db, $modules)
+eval:call($input, $href, $db, $modules, $lang)
+```
 
 If `$input` is an element, it must have an attribute `@name`,
 interpreted as a lexical QName.  The namespace binding for the name
@@ -110,9 +118,11 @@ function item.
 
 ## eval:module
 
-    eval:module($input)
-    eval:module($input, $db)
-    eval:module($input, $db, $modules)
+```xquery
+eval:module($input)
+eval:module($input, $db)
+eval:module($input, $db, $modules)
+```
 
 If `$input` is an element, it must have an attribute `@href`,
 interpreted as the URI of the main module to evaluate.  If not it is a
@@ -120,9 +130,11 @@ string and is such a URI itself.
 
 ## eval:script
 
-    eval:script($input)
-    eval:script($input, $db)
-    eval:script($input, $db, $modules)
+```xquery
+eval:script($input)
+eval:script($input, $db)
+eval:script($input, $db, $modules)
+```
 
 If `$input` is an element, it must have an attribute `@href`,
 interpreted as the URI of the script to execute.  If not it is a
@@ -130,10 +142,12 @@ string and is such a URI itself.
 
 ## eval:eval
 
-    eval:eval($input)
-    eval:eval($input, $db)
-    eval:eval($input, $db, $modules)
-    eval:eval($input, $db, $modules, $lang)
+```xquery
+eval:eval($input)
+eval:eval($input, $db)
+eval:eval($input, $db, $modules)
+eval:eval($input, $db, $modules, $lang)
+```
 
 The string value of `$input` is interpreted as code to be evaluated.
 
