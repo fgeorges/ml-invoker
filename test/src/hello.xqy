@@ -254,21 +254,37 @@ declare function local:test(
    $cmp  as xs:string?
 )
 {
-   element { $name } {
-      attribute { 'component' } { $cmp }[$cmp],
-      attribute { 'what' } { $what },
-      attribute { 'how' } { $how },
-      $res
+   <p xmlns="http://www.w3.org/1999/xhtml"> {
+      if ( $res instance of xs:string and $res eq $exp ) then (
+         <span style="color: green">✔</span>,
+         ' ',
+         fn:string-join(($cmp, $what, $how), ' / ')
+      )
+      else (
+         <span style="color: red">✘</span>,
+         ' ',
+         fn:string-join(($cmp, $what, $how), ' / '),
+         ' - expected: ',
+         $exp,
+         ' - got: ',
+         $res
+      )
    }
+   </p>
 };
 
 (:~~~~~
  : Actual test cases.
  :)
 
-<result>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<body>
 
-<!-- invokes -->
+<h1>Invoker tests</h1>
+
+<p>Ad-hoc unit test page for the ml-invoker library.</p>
+
+<h2>eval:invoke</h2>
 
 {
    local:invoke(
@@ -332,7 +348,7 @@ declare function local:test(
       'Hello, js!', 'javascript', 'elem', 'module')
 }
 
-<!-- calls -->
+<h2>eval:call</h2>
 
 {
    local:call(
@@ -371,12 +387,12 @@ declare function local:test(
 
    local:call(
       local:hello-doc#0, (), 'Documents',
-      'Hello, world!', 'db', 'param'),
+      'Hello, document!', 'db', 'param'),
 
    local:call(
       <dummy xmlns:l="http://www.w3.org/2005/xquery-local-functions"
              name="l:hello-doc" db="Documents"/>,
-      'Hello, world!', 'db', 'elem'),
+      'Hello, document!', 'db', 'elem'),
 
    local:call(
       xs:QName('l:hello'), '/hello-libdules.xqy', (), 'invoker-db-two',
@@ -408,7 +424,7 @@ declare function local:test(
    :)
 }
 
-<!-- modules -->
+<h2>eval:module</h2>
 
 {
    local:module(
@@ -429,11 +445,11 @@ declare function local:test(
 
    local:module(
       '/hello-modules.xqy', (), 'invoker-db-two',
-      'Hello, world!', 'modules', 'param'),
+      'Hello, modules!', 'modules', 'param'),
 
    local:module(
       <dummy href="/hello-modules.xqy" modules-db="invoker-db-two"/>,
-      'Hello, world!', 'modules', 'elem'),
+      'Hello, modules!', 'modules', 'elem'),
 
    local:module(
       '/hello-world.xqy', (), (), 'xquery',
@@ -445,11 +461,12 @@ declare function local:test(
 
    local:module(
       '/hello-world.sjs', (), (), 'js',
-      'Hello, world!', 'javascript', 'param'),
+      'Hello, js!', 'javascript', 'param'),
 
    local:module(
       <dummy href="/hello-world.sjs" lang="js"/>,
-      'Hello, world!', 'javascript', 'elem')
+      'Hello, js!', 'javascript', 'elem')
 }
 
-</result>
+</body>
+</html>
