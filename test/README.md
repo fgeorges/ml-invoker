@@ -15,7 +15,7 @@ To load modules and deploy test code:
     # deploy modules on 2d db
     > mlproj deploy -b db-two test/db-two/
 
-Then go to the following URL, on the test app server (adapt the host
-and port number as required):
+Then go to the root of the test app server, at the following URL
+(adapt the host and port number as required):
 
-    http://ml9ea3:8050/hello.xqy
+    http://ml9ea3:8050/
