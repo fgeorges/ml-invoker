@@ -116,6 +116,19 @@ function item.
 
 `$lang` defaults to `xquery`.
 
+Example, to call a function item on specific content and modules
+databases:
+
+```xquery
+eval:call(
+   function() {
+      'Hello, world!'
+   },
+   (),
+   'Documents',
+   'Modules')
+```
+
 ## eval:module
 
 ```xquery
