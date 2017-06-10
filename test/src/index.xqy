@@ -441,6 +441,8 @@ declare function local:display(
 <h2>eval:invoke</h2>
 
 {
+   (: local:invoke(..., 'expected', 'what', 'how', 'cmp') calls eval:invoke(...) :)
+
    local:invoke(
       <eval:function name="l:hello" xmlns:l="http://www.w3.org/2005/xquery-local-functions"/>,
       'Hello, world!', 'name', 'both', 'function'),
@@ -517,6 +519,8 @@ declare function local:display(
 <h2>eval:call</h2>
 
 {
+   (: local:call(..., 'expected', 'what', 'how') calls eval:call(...) :)
+
    local:call(
       fn:function-lookup(xs:QName('local:hello'), 0),
       'Hello, world!', 'name', 'param'),
@@ -601,6 +605,8 @@ declare function local:display(
 <h2>eval:module</h2>
 
 {
+   (: local:module(..., 'expected', 'what', 'how') calls eval:module(...) :)
+
    local:module(
       '/hello-world.xqy',
       'Hello, world!', 'href', 'param'),
@@ -645,6 +651,8 @@ declare function local:display(
 <h2>eval:script</h2>
 
 {
+   (: local:script(..., 'expected', 'what', 'how') calls eval:script(...) :)
+
    local:script(
       '/hello-world.sjs',
       'Hello, js!', 'href', 'param'),
@@ -673,6 +681,8 @@ declare function local:display(
 <h2>eval:eval</h2>
 
 {
+   (: local:code(..., 'expected', 'what', 'how') calls eval:code(...) :)
+
    local:code(
       '"Hello, me!"',
       'Hello, me!', 'code', 'param'),
