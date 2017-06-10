@@ -44,9 +44,9 @@ eval:invoke(
        <function name="my:do-that"  id="two"   db="Documents"/>
        <function name="my:do-stuff" id="three" modules-db="Modules"/>
        <module href="/some/module.xqy" id="four" modules-db="Modules"/>
-       <eval id="five">
+       <code id="five">
           some:complete('query to evaluate')
-       </eval>
+       </code>
     </config>,
     'two')
 ```
@@ -62,13 +62,13 @@ The following elements are supported:
 
 <script href="/some/script.sjs" id="three" db="Documents" modules-db="Modules"/>
 
-<eval id="four" db="Documents" modules-db="Modules" lang="xquery">
+<code id="four" db="Documents" modules-db="Modules" lang="xquery">
    do:stuff('Hello, world!')
-</eval>
+</code>
 
-<eval id="five" db="Documents" modules-db="Modules" lang="js">
+<code id="five" db="Documents" modules-db="Modules" lang="js">
    do.stuff('Hello, world!');
-</eval>
+</code>
 ```
 
 The attribute `@id` is the ID of the element.  The attribute `@db` is
@@ -86,13 +86,13 @@ The minimal form of the above elements is as following:
 
 <script href="/some/script.sjs"/>
 
-<eval id="four">
+<code id="four">
    do:stuff('Hello, world!')
-</eval>
+</code>
 
-<eval id="five">
+<code id="five">
    do.stuff('Hello, world!');
-</eval>
+</code>
 ```
 
 The attribute `@href` on the element `function` is the URI of the
@@ -151,13 +151,13 @@ If `$input` is an element, it must have an attribute `@href`,
 interpreted as the URI of the script to execute.  If not it is a
 string and is such a URI itself.
 
-## eval:eval
+## eval:code
 
 ```xquery
-eval:eval($input)
-eval:eval($input, $db)
-eval:eval($input, $db, $modules)
-eval:eval($input, $db, $modules, $lang)
+eval:code($input)
+eval:code($input, $db)
+eval:code($input, $db, $modules)
+eval:code($input, $db, $modules, $lang)
 ```
 
 The string value of `$input` is interpreted as code to be evaluated.

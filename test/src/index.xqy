@@ -233,6 +233,107 @@ declare function local:module(
 };
 
 (:~~~~~
+ : Test wrapper for eval:script functions.
+ :)
+
+declare function local:script(
+   $arg1 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:script($arg1),
+      $exp, 'script', $what, $how)
+};
+
+declare function local:script(
+   $arg1 as item()*,
+   $arg2 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:script($arg1, $arg2),
+      $exp, 'script', $what, $how)
+};
+
+declare function local:script(
+   $arg1 as item()*,
+   $arg2 as item()*,
+   $arg3 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:script($arg1, $arg2, $arg3),
+      $exp, 'script', $what, $how)
+};
+
+(:~~~~~
+ : Test wrapper for eval:code functions.
+ :)
+
+declare function local:code(
+   $arg1 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:code($arg1),
+      $exp, 'code', $what, $how)
+};
+
+declare function local:code(
+   $arg1 as item()*,
+   $arg2 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:code($arg1, $arg2),
+      $exp, 'code', $what, $how)
+};
+
+declare function local:code(
+   $arg1 as item()*,
+   $arg2 as item()*,
+   $arg3 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:code($arg1, $arg2, $arg3),
+      $exp, 'code', $what, $how)
+};
+
+declare function local:code(
+   $arg1 as item()*,
+   $arg2 as item()*,
+   $arg3 as item()*,
+   $arg4 as item()*,
+   $exp  as xs:string,
+   $what as xs:string,
+   $how  as xs:string
+)
+{
+   local:test(
+      eval:code($arg1, $arg2, $arg3, $arg4),
+      $exp, 'code', $what, $how)
+};
+
+(:~~~~~
  : Test result formatting functions.
  :)
 
@@ -343,6 +444,18 @@ declare function local:display(
    local:invoke(
       <eval:function name="l:hello" xmlns:l="http://www.w3.org/2005/xquery-local-functions"/>,
       'Hello, world!', 'name', 'both', 'function'),
+
+   local:invoke(
+      <eval:script href="/hello-world.sjs"/>,
+      'Hello, js!', 'name', 'both', 'script'),
+
+   local:invoke(
+      <eval:code>
+         let $who := 'world'
+         return
+            'Hello, ' || $who || '!'
+      </eval:code>,
+      'Hello, world!', 'name', 'both', 'code'),
 
    local:invoke(
       <eval:module href="/hello-world.xqy"/>,
@@ -532,13 +645,93 @@ declare function local:display(
 <h2>eval:script</h2>
 
 {
-   local:todo('eval:script not supported yet')
+   local:script(
+      '/hello-world.sjs',
+      'Hello, js!', 'href', 'param'),
+
+   local:script(
+      <dummy href="/hello-world.sjs"/>,
+      'Hello, js!', 'href', 'elem'),
+
+   local:script(
+      '/hello-doc.xqy', 'Documents',
+      'Hello, document!', 'db', 'param'),
+
+   local:script(
+      <dummy href="/hello-doc.xqy" db="Documents"/>,
+      'Hello, document!', 'db', 'elem'),
+
+   local:script(
+      '/hello-modules.sjs', (), 'invoker-db-two',
+      'Hello, modules!', 'modules', 'param'),
+
+   local:script(
+      <dummy href="/hello-modules.sjs" modules-db="invoker-db-two"/>,
+      'Hello, modules!', 'modules', 'elem')
 }
 
 <h2>eval:eval</h2>
 
 {
-   local:todo('eval:eval not supported yet')
+   local:code(
+      '"Hello, me!"',
+      'Hello, me!', 'code', 'param'),
+
+   local:code(
+      <dummy>'Hello, me!'</dummy>,
+      'Hello, me!', 'code', 'elem'),
+
+   local:code(
+      '"Hello, " || fn:doc("/who.xml") || "!"',
+      'Documents',
+      'Hello, document!', 'db', 'param'),
+
+   local:code(
+      <dummy db="Documents">
+         'Hello, ' || fn:doc('/who.xml') || '!'
+      </dummy>,
+      'Hello, document!', 'db', 'elem'),
+
+   local:code(
+      'import module namespace l = "http://expath.org/ns/invoker/test/libdules"'
+      || '   at "/hello-libdules.xqy";'
+      || ' l:hello()',
+      (),
+      'invoker-db-two',
+      'Hello, world!', 'modules', 'param'),
+
+   local:code(
+      <dummy modules-db="invoker-db-two">
+         import module namespace l = "http://expath.org/ns/invoker/test/libdules"
+            at "/hello-libdules.xqy";
+         l:hello()
+      </dummy>,
+      'Hello, world!', 'modules', 'elem'),
+
+   local:code(
+      '"Hello, XQuery!"', (), (), 'xquery',
+      'Hello, XQuery!', 'xquery', 'param'),
+
+   local:code(
+      <dummy lang="xquery">'Hello, XQuery!'</dummy>,
+      'Hello, XQuery!', 'xquery', 'elem'),
+
+   local:code(
+      'let who = "JavaScript"; "Hello, " + who + "!";', (), (), 'js',
+      'Hello, JavaScript!', 'javascript', 'param'),
+
+   local:code(
+      <dummy lang="js">
+         let who = 'JavaScript';
+         'Hello, ' + who + '!';
+      </dummy>,
+      'Hello, JavaScript!', 'javascript', 'elem')
+}
+
+<h2>More complex</h2>
+
+{
+   local:todo('Put on some more complex tests, like eval within eval...')
 }
 
 </body>
