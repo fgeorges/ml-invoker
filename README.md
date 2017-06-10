@@ -55,6 +55,7 @@ let $conf :=
          </code>
       </config>
 return
+   (: invoke component with ID 'two', i.e. calls my:do-that() on "Documents" :)
    eval:invoke($conf, 'two')
 ```
 
