@@ -45,15 +45,15 @@ Example:
 ```xquery
 (: hard-coded here, but can of course be read from a document :)
 let $conf :=
-	  <config xmlns="http://expath.org/ns/invoker" xmlns:my="my/lib">
-		 <function name="my:do-this"  id="one"/>
-		 <function name="my:do-that"  id="two"   db="Documents"/>
-		 <function name="my:do-stuff" id="three" modules-db="Modules"/>
-		 <module href="/some/module.xqy" id="four" modules-db="Modules"/>
-		 <code id="five">
-			some:complete('query to evaluate')
-		 </code>
-	  </config>
+      <config xmlns="http://expath.org/ns/invoker" xmlns:my="my/lib">
+         <function name="my:do-this"  id="one"/>
+         <function name="my:do-that"  id="two"   db="Documents"/>
+         <function name="my:do-stuff" id="three" modules-db="Modules"/>
+         <module href="/some/module.xqy" id="four" modules-db="Modules"/>
+         <code id="five">
+            some:complete('query to evaluate')
+         </code>
+      </config>
 return
    eval:invoke($conf, 'two')
 ```
