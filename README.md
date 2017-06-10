@@ -14,6 +14,11 @@ be set on an XML element.  The function `eval:invoke()` gets such an
 element, and evaluates it (regardless it is a function call, a main
 module or a piece of code.)
 
+## TODO
+
+Add the ability to pass parameters to function/module/script/code
+evaluation.
+
 ## eval:invoke
 
 This function is the main entry point, and is most likely the one you
