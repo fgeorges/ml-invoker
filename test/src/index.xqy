@@ -257,14 +257,7 @@ declare function local:todo(
    $cmp  as xs:string?
 )
 {
-   <p xmlns="http://www.w3.org/1999/xhtml"> {
-      <span style="color: red">✘</span>,
-      ' ',
-      fn:string-join(($cmp, $what, $how), ' / '),
-      ' - ',
-      $msg
-   }
-   </p>
+   local:fail($msg, $cmp, $what, $how)
 };
 
 declare function local:test(
@@ -287,23 +280,50 @@ declare function local:test(
    $cmp  as xs:string?
 )
 {
-   <p xmlns="http://www.w3.org/1999/xhtml"> {
-      if ( $res instance of xs:string and $res eq $exp ) then (
-         <span style="color: green">✔</span>,
+   if ( $res instance of xs:string and $res eq $exp ) then
+      local:success($cmp, $what, $how)
+   else
+      local:fail(
+	 'expected: ' || $exp || ' - got: ' || $res,
+	 $cmp, $what, $how)
+};
+
+declare function local:success(
+   $cmp  as xs:string?,
+   $what as xs:string?,
+   $how  as xs:string?
+)
+{
+   local:display((), $cmp, $what, $how, 'green', '✔')
+};
+
+declare function local:fail(
+   $msg  as xs:string?,
+   $cmp  as xs:string?,
+   $what as xs:string?,
+   $how  as xs:string?
+)
+{
+   local:display($msg, $cmp, $what, $how, 'red', '✘')
+};
+
+declare function local:display(
+   $msg   as xs:string?,
+   $cmp   as xs:string?,
+   $what  as xs:string?,
+   $how   as xs:string?,
+   $color as xs:string,
+   $tick  as xs:string
+)
+{
+   let $left := fn:string-join(($cmp, $what, $how), ' / ')[.]
+   return
+      <p xmlns="http://www.w3.org/1999/xhtml"> {
+         <span style="color: { $color }">{ $tick }</span>,
          ' ',
-         fn:string-join(($cmp, $what, $how), ' / ')
-      )
-      else (
-         <span style="color: red">✘</span>,
-         ' ',
-         fn:string-join(($cmp, $what, $how), ' / '),
-         ' - expected: ',
-         $exp,
-         ' - got: ',
-         $res
-      )
-   }
-   </p>
+         fn:string-join(($left, $msg), ' - ')
+      }
+      </p>
 };
 
 (:~~~~~
