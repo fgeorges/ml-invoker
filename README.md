@@ -7,8 +7,8 @@ Each invocation can be a function, a main module, or a piece of code
 to evaluate.  Each invocation can be given options, like the database
 to run against.
 
-Whilst this interface is useful to use directly from your code, its
-real power is for cases where the invications are in a document.
+This interface is useful to use directly from your code, but its real
+power is for cases where the invications are in a document.
 Typically, in a config document for your application.  All options can
 be set on an XML element.  The function `eval:invoke()` gets such an
 element, and evaluates it (regardless it is a function call, a main
