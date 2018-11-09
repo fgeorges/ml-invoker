@@ -278,7 +278,8 @@ declare function eval:do-it(
          }
          </options>
    return
-      (: cannot force the lang, it is deduced from the file extension and configured mime types :)
+      (: for xdmp:invoke, cannot force the lang, it is deduced from the file
+         extension and configured mime types :)
       if ( $lang eq 'xquery' ) then
          $impl-xq($href, (), $opts)
       else if ( $lang eq 'js' ) then

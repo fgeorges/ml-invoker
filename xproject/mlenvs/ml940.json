@@ -1,0 +1,9 @@
+{
+    "mlproj": {
+        "format": "0.1",
+        "import": "test.json",
+        "connect": {
+            "host": "ml940"
+	}
+    }
+}
