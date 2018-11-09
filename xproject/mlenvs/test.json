@@ -2,7 +2,7 @@
     "mlproj": {
         "format": "0.1",
         "connect": {
-            "host": "ml9ea3",
+            "host": "localhost",
             "user": "admin",
             "password": "admin"
         },
